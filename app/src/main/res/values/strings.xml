@@ -19,7 +19,15 @@
     <string name="account">Account</string>
     <string name="sign_in_to_your">Sign in to your</string>
     <string name="sign_up">Sign Up</string>
-    <string name="sign_in">Sign In</string>
     <string name="x">X</string>
     <string name="social">Social</string>
+    <string name="create_an">Create an</string>
+    <string name="name">Name</string>
+    <string name="john_doe">John Doe</string>
+    <string name="terms_condition"><u>terms &amp; condition</u></string>
+    <string name="sign_in_special">Sign In!</string>
+    <string name="_1234567890">1234567890</string>
+    <string name="contact_no">Contact no.</string>
+    <string name="i_agree_to">I agree to</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>
