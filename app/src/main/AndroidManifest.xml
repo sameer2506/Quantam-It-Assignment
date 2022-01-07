@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuantamItAssignment">
         <activity
+            android:name=".ui.auth.AuthenticationActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.auth.SignInActivity"
             android:exported="true" />
         <activity
