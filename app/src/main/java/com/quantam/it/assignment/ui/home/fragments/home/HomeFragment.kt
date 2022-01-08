@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
 
     private val categoryList = ArrayList<CategoriesData>()
     private val backToCityList = ArrayList<ProductCatalog>()
+    private val clothAndShoesList = ArrayList<ProductCatalog>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,10 +53,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpCategoryList()
+        createCategoryList()
         setUpCategoryRecyclerView()
-        setUpBackToCityList()
+        createBackToCityList()
         setUpBackToListRecyclerView()
+        createClothShoesList()
+        setUpClothShoesRecyclerView()
+    }
+
+    private fun setUpClothShoesRecyclerView(){
+
+        binding.clothAndShoesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+
+            val clothAdapter = ProductCatalogueRecyclerAdapter(clothAndShoesList, fragmentContext)
+
+            val horizontalLayout = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            layoutManager = horizontalLayout
+
+            adapter = clothAdapter
+        }
     }
 
     private fun setUpCategoryRecyclerView(){
@@ -97,7 +119,20 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUpCategoryList() {
+    private fun createClothShoesList(){
+
+        var data = ProductCatalog(R.drawable.levis_cloth, 30)
+        clothAndShoesList.add(data)
+
+        data = ProductCatalog(R.drawable.lehenga, 5)
+        clothAndShoesList.add(data)
+
+        data = ProductCatalog(R.drawable.shoes, 5)
+        clothAndShoesList.add(data)
+
+    }
+
+    private fun createCategoryList() {
 
         var data = CategoriesData(R.drawable.art_craft_icon, "Art and Crafts")
         categoryList.add(data)
@@ -116,7 +151,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setUpBackToCityList(){
+    private fun createBackToCityList(){
         var data = ProductCatalog(R.drawable.watch, 30)
         backToCityList.add(data)
 
