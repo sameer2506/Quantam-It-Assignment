@@ -1,4 +1,4 @@
-package com.quantam.it.assignment.ui.auth
+package com.quantam.it.assignment.ui.auth.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

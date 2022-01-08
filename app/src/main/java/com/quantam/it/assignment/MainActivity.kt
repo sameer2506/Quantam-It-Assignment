@@ -3,7 +3,7 @@ package com.quantam.it.assignment
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.quantam.it.assignment.ui.auth.AuthenticationActivity
+import com.quantam.it.assignment.ui.auth.activity.AuthenticationActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

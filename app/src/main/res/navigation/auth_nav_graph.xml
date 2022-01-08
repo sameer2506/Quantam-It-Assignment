@@ -21,6 +21,12 @@
       android:id="@+id/sign_up_fragment"
       android:name="com.quantam.it.assignment.ui.auth.fragments.SignUpFragment"
       android:label="Sign Up"
-      tools:layout="@layout/fragment_sign_up"/>
+      tools:layout="@layout/fragment_sign_up">
+
+      <action
+         android:id="@+id/action_sign_up_to_sign_in_fragment"
+         app:destination="@id/sign_in_fragment"/>
+
+   </fragment>
 
 </navigation>
