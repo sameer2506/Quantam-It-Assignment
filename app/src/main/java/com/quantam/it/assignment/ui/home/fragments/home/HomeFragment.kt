@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.FragmentHomeBinding
 import com.quantam.it.assignment.modal.CategoriesData
+import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.ui.home.adapters.CategoryRecyclerAdapter
+import com.quantam.it.assignment.ui.home.adapters.ProductCatalogueRecyclerAdapter
 
 class HomeFragment : Fragment() {
 
@@ -29,6 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var fragmentActivity: FragmentActivity
 
     private val categoryList = ArrayList<CategoriesData>()
+    private val backToCityList = ArrayList<ProductCatalog>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +54,8 @@ class HomeFragment : Fragment() {
 
         setUpCategoryList()
         setUpCategoryRecyclerView()
+        setUpBackToCityList()
+        setUpBackToListRecyclerView()
     }
 
     private fun setUpCategoryRecyclerView(){
@@ -73,6 +78,25 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun setUpBackToListRecyclerView(){
+
+        binding.backRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+
+            val backAdapter = ProductCatalogueRecyclerAdapter(backToCityList, fragmentContext)
+
+            val horizontalLayout = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            layoutManager = horizontalLayout
+
+            adapter = backAdapter
+        }
+    }
+
     private fun setUpCategoryList() {
 
         var data = CategoriesData(R.drawable.art_craft_icon, "Art and Crafts")
@@ -90,6 +114,17 @@ class HomeFragment : Fragment() {
         data = CategoriesData(R.drawable.digital_music_icon, "Digital News")
         categoryList.add(data)
 
+    }
+
+    private fun setUpBackToCityList(){
+        var data = ProductCatalog(R.drawable.watch, 30)
+        backToCityList.add(data)
+
+        data = ProductCatalog(R.drawable.apple_mobile, 5)
+        backToCityList.add(data)
+
+        data = ProductCatalog(R.drawable.shoes, 5)
+        backToCityList.add(data)
     }
 
     override fun onDestroyView() {
