@@ -13,15 +13,13 @@ import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.FragmentHomeBinding
 import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.ProductCatalog
-import com.quantam.it.assignment.ui.home.adapters.CategoryRecyclerAdapter
-import com.quantam.it.assignment.ui.home.adapters.ProductCatalogueRecyclerAdapter
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import android.os.CountDownTimer
+import com.quantam.it.assignment.modal.DealsData
 import com.quantam.it.assignment.modal.FlashDealData
-import com.quantam.it.assignment.ui.home.adapters.BestSellerRecyclerAdapter
-import com.quantam.it.assignment.ui.home.adapters.FlashDealRecyclerAdapter
+import com.quantam.it.assignment.ui.home.adapters.*
 
 class HomeFragment : Fragment() {
 
@@ -40,6 +38,7 @@ class HomeFragment : Fragment() {
     private val clothAndShoesList = ArrayList<ProductCatalog>()
     private val flashDealList = ArrayList<FlashDealData>()
     private val bestSellersList = ArrayList<ProductCatalog>()
+    private val dealsList = ArrayList<DealsData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +69,8 @@ class HomeFragment : Fragment() {
         setUpFlashRecyclerView()
         createBestSellerList()
         setUpBestSellerRecyclerView()
+        createDealsList()
+        setUpDealsRecyclerView()
 
         object : CountDownTimer(5000000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -87,6 +88,36 @@ class HomeFragment : Fragment() {
                 binding.countDown.text = "00:00:00"
             }
         }.start()
+
+    }
+
+    private fun setUpDealsRecyclerView(){
+
+        binding.bestSellerRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+
+            val dealsAdapter = DealsRecyclerAdapter(dealsList, fragmentContext)
+
+            val horizontalLayout = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            layoutManager = horizontalLayout
+
+            adapter = dealsAdapter
+        }
+
+    }
+
+    private fun createDealsList(){
+
+        var data = DealsData(R.drawable.girl, "BIG OFFER DAY", "Offer 35% Off")
+        dealsList.add(data)
+
+        data = DealsData(R.drawable.camera, "Digital Cameras", "Offer 5% Off")
+        dealsList.add(data)
 
     }
 
