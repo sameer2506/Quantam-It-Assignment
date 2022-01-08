@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465414911027",
+    "project_id": "quantam-5f41c",
+    "storage_bucket": "quantam-5f41c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465414911027:android:6aa3b68fb30ea908cf5f46",
+        "android_client_info": {
+          "package_name": "com.quantam.it.assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465414911027-67gq0au0u95ue4b6moo2u0vpiel6tjor.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBebZHorZ7CDjGU5tvL0SIpizUYbbcjcfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465414911027-67gq0au0u95ue4b6moo2u0vpiel6tjor.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
