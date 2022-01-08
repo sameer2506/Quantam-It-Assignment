@@ -6,16 +6,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.quantam.it.assignment.R
-import com.quantam.it.assignment.databinding.CategoryRecyclerViewItemViewBinding
 import com.quantam.it.assignment.databinding.FlashDealRecyclerItemViewBinding
-import com.quantam.it.assignment.databinding.ProductCatalogueRecyclerItemViewBinding
-import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.FlashDealData
-import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.utils.toast
 
 class FlashDealRecyclerAdapter(
-    val arrayList: ArrayList<FlashDealData>,
+    private val arrayList: ArrayList<FlashDealData>,
     val context: Context
 ) : RecyclerView.Adapter<FlashDealRecyclerAdapter.CategoryVH>() {
 
@@ -40,7 +36,7 @@ class FlashDealRecyclerAdapter(
             list: FlashDealData
         ) {
             binding.imgProduct.setImageResource(list.image)
-            binding.textView22.text = list.amount.toString()
+            binding.textView22.text = "$${list.amount.toString()}"
             binding.executePendingBindings()
         }
 

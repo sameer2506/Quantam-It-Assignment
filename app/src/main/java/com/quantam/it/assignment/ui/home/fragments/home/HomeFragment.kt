@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
 
     private fun setUpDealsRecyclerView(){
 
-        binding.bestSellerRecyclerView.apply {
+        binding.dealsOfTheDayRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
 
             val dealsAdapter = DealsRecyclerAdapter(dealsList, fragmentContext)

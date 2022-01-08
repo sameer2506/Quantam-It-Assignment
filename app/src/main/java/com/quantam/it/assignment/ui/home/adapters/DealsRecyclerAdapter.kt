@@ -6,17 +6,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.quantam.it.assignment.R
-import com.quantam.it.assignment.databinding.BestDealsRecyclerItemBinding
-import com.quantam.it.assignment.databinding.CategoryRecyclerViewItemViewBinding
 import com.quantam.it.assignment.databinding.DealsRecyclerItemBinding
-import com.quantam.it.assignment.databinding.ProductCatalogueRecyclerItemViewBinding
-import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.DealsData
-import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.utils.toast
 
 class DealsRecyclerAdapter(
-    val arrayList: ArrayList<DealsData>,
+    private val arrayList: ArrayList<DealsData>,
     val context: Context
 ) : RecyclerView.Adapter<DealsRecyclerAdapter.CategoryVH>() {
 
@@ -26,7 +21,7 @@ class DealsRecyclerAdapter(
     ): CategoryVH = CategoryVH.from(parent)
 
     override fun onBindViewHolder(holder: CategoryVH, position: Int) {
-        holder.bind(arrayList[position])
+        holder.bind(arrayList[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -38,11 +33,20 @@ class DealsRecyclerAdapter(
     class CategoryVH(private val binding: DealsRecyclerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            list: DealsData
+            list: DealsData,
+            position: Int
         ) {
             binding.dealsImage.setImageResource(list.image)
             binding.textView23.text = list.text1
             binding.textView24.text = list.text2
+
+            if (position % 2 == 0){
+                binding.textView24.setBackgroundResource(R.color.green)
+            }
+            else{
+                binding.textView24.setBackgroundResource(R.color.cyan)
+            }
+
             binding.executePendingBindings()
         }
 

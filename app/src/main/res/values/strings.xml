@@ -41,4 +41,16 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="search">Search…</string>
+    <string name="search_logo">Search logo</string>
+    <string name="category_icon">Category Icon</string>
+    <string name="deals_image">Deals Image</string>
+    <string name="best_sellers">BEST SELLERS</string>
+    <string name="back_to_the_city">BACK TO THE CITY</string>
+    <string name="product_catalogue">Product Catalogue</string>
+    <string name="up_to">Up to</string>
+    <string name="off">% off</string>
+    <string name="clothing_and_shoes">CLOTHING AND SHOES</string>
+    <string name="flash_deals">FLASH DEALS</string>
+    <string name="discount_you_can_t_resist">Discount you can\'t resist!</string>
 </resources>

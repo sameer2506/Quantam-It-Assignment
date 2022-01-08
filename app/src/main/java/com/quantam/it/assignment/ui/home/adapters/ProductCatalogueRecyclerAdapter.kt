@@ -6,14 +6,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.quantam.it.assignment.R
-import com.quantam.it.assignment.databinding.CategoryRecyclerViewItemViewBinding
 import com.quantam.it.assignment.databinding.ProductCatalogueRecyclerItemViewBinding
-import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.utils.toast
 
 class ProductCatalogueRecyclerAdapter(
-    val arrayList: ArrayList<ProductCatalog>,
+    private val arrayList: ArrayList<ProductCatalog>,
     val context: Context
 ) : RecyclerView.Adapter<ProductCatalogueRecyclerAdapter.CategoryVH>() {
 
