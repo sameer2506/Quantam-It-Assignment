@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import android.os.CountDownTimer
 import com.quantam.it.assignment.modal.FlashDealData
+import com.quantam.it.assignment.ui.home.adapters.BestSellerRecyclerAdapter
 import com.quantam.it.assignment.ui.home.adapters.FlashDealRecyclerAdapter
 
 class HomeFragment : Fragment() {
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
     private val backToCityList = ArrayList<ProductCatalog>()
     private val clothAndShoesList = ArrayList<ProductCatalog>()
     private val flashDealList = ArrayList<FlashDealData>()
+    private val bestSellersList = ArrayList<ProductCatalog>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +68,8 @@ class HomeFragment : Fragment() {
         setUpClothShoesRecyclerView()
         createFlashDealList()
         setUpFlashRecyclerView()
+        createBestSellerList()
+        setUpBestSellerRecyclerView()
 
         object : CountDownTimer(5000000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -83,6 +87,37 @@ class HomeFragment : Fragment() {
                 binding.countDown.text = "00:00:00"
             }
         }.start()
+
+    }
+
+    private fun setUpBestSellerRecyclerView(){
+        binding.bestSellerRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+
+            val bestSellerAdapter = BestSellerRecyclerAdapter(bestSellersList, fragmentContext)
+
+            val horizontalLayout = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            layoutManager = horizontalLayout
+
+            adapter = bestSellerAdapter
+        }
+    }
+
+    private fun createBestSellerList(){
+
+        var data = ProductCatalog(R.drawable.mobiles, 20)
+        bestSellersList.add(data)
+
+        data = ProductCatalog(R.drawable.watches, 50)
+        bestSellersList.add(data)
+
+        data = ProductCatalog(R.drawable.bags, 30)
+        bestSellersList.add(data)
 
     }
 
