@@ -30,4 +30,22 @@ class AuthVM(
         _saveUserDetails.value = repository.saveUserDetails(data)
     }
 
+    private val _signInUsingEmail: MutableLiveData<Results<Boolean>> = MutableLiveData()
+    val signInUsingEmail: LiveData<Results<Boolean>>
+        get() = _signInUsingEmail
+
+    fun signInUsingEmail(emailId: String, password: String) = viewModelScope.launch {
+        _signInUsingEmail.value = Results.Loading
+        _signInUsingEmail.value = repository.signInUsingEmail(emailId, password)
+    }
+
+    private val _checkUserLogin: MutableLiveData<Results<Boolean>> = MutableLiveData()
+    val checkUserLogin: LiveData<Results<Boolean>>
+        get() = _checkUserLogin
+
+    fun checkUserLogin() = viewModelScope.launch {
+        _checkUserLogin.value = Results.Loading
+        _checkUserLogin.value = repository.checkUserLogin()
+    }
+
 }

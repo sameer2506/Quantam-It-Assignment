@@ -9,4 +9,8 @@ interface AuthDS {
     suspend fun saveUserDetails(data: HashMap<String, Any>): Results<Boolean>
 
     suspend fun sendVerificationEmail(emailId: String): Results<Boolean>
+
+    suspend fun signInUsingEmail(emailId: String, password: String): Results<Boolean>
+
+    suspend fun checkUserLogin() : Results<Boolean>
 }

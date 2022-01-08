@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.quantam.it.assignment.AppPreferences
 import com.quantam.it.assignment.network.Results
 import com.quantam.it.assignment.network.dataSource.AuthDS
 import com.quantam.it.assignment.utils.log
@@ -18,6 +19,8 @@ class AuthRepository(
     private val auth: FirebaseAuth = Firebase.auth
 
     private val firebaseFirestore = Firebase.firestore
+
+    private val appPreferences = AppPreferences(context)
 
     override suspend fun createUserWithEmailAndPassword(
         email: String,
@@ -60,4 +63,28 @@ class AuthRepository(
                     cont.resume(Results.Error(it))
                 }
         }
+
+    override suspend fun signInUsingEmail(emailId: String, password: String): Results<Boolean> =
+        suspendCoroutine { cont ->
+            auth
+                .signInWithEmailAndPassword(emailId, password)
+                .addOnSuccessListener {
+                    appPreferences.saveId(auth.uid!!)
+                    cont.resume(Results.Success(true))
+                }
+                .addOnFailureListener {
+                    cont.resume(Results.Error(it))
+                }
+        }
+
+
+    override suspend fun checkUserLogin(): Results<Boolean> =
+        suspendCoroutine { cont ->
+            if (auth.currentUser != null) {
+                cont.resume(Results.Success(true))
+            } else {
+                cont.resume(Results.Success(false))
+            }
+        }
+
 }

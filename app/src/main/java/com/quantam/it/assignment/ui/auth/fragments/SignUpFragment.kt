@@ -2,12 +2,11 @@ package com.quantam.it.assignment.ui.auth.fragments
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Timestamp
@@ -22,7 +21,6 @@ import com.quantam.it.assignment.ui.auth.viewModel.AuthVM
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVMF
 import com.quantam.it.assignment.utils.logError
 import com.quantam.it.assignment.utils.toast
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -43,7 +41,7 @@ class SignUpFragment : Fragment(), KodeinAware {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         fragmentContext = requireContext()
         fragmentActivity = requireActivity()
@@ -56,6 +54,10 @@ class SignUpFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       binding.tvSignIn.setOnClickListener {
+           findNavController().navigate(R.id.action_sign_up_to_sign_in_fragment)
+       }
 
         binding.btnSignUp.setOnClickListener {
             signUp()

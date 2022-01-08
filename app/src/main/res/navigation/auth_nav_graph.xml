@@ -12,7 +12,7 @@
        android:label="Sign In">
 
       <action
-         android:id="@+id/action_sign_in_to_sign_up"
+         android:id="@+id/action_sign_in_to_sign_up_fragment"
           app:destination="@id/sign_up_fragment"/>
 
    </fragment>
