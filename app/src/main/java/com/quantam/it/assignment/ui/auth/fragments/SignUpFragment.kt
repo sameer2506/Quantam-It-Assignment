@@ -79,7 +79,7 @@ class SignUpFragment : Fragment(), KodeinAware {
             when(it){
                 is Results.Loading -> {}
                 is Results.Success -> {
-                    saveData(name, emailId, contactNo)
+                    saveData(name, emailId, contactNo, it.data)
                 }
                 is Results.Error -> {
                     fragmentContext.toast("Something went wrong. Try again later.")
@@ -89,7 +89,7 @@ class SignUpFragment : Fragment(), KodeinAware {
         })
     }
 
-    private fun saveData(name: String, emailId: String, contactNo: String) {
+    private fun saveData(name: String, emailId: String, contactNo: String, id: String) {
 
         val timestamp = Timestamp.now()
         val milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
@@ -102,12 +102,12 @@ class SignUpFragment : Fragment(), KodeinAware {
         data["createdOn"] = netDate
         data["countryCode"] = "+91"
 
-        viewModel.saveUserDetails(data)
+        viewModel.saveUserDetails(data, id)
         viewModel.saveUserDetails.observe(viewLifecycleOwner, {
             when(it){
                 is Results.Loading ->{}
                 is Results.Success -> {
-                    sendVerificationEmail(emailId)
+                    findNavController().navigate(R.id.action_sign_up_to_sign_in_fragment)
                 }
                 is Results.Error -> {
                     fragmentContext.toast("Something went wrong. Try again later.")
@@ -115,11 +115,6 @@ class SignUpFragment : Fragment(), KodeinAware {
                 }
             }
         })
-    }
-
-    private fun sendVerificationEmail(emailId: String){
-        findNavController().navigate(R.id.action_sign_up_to_sign_in_fragment)
-
     }
 
     private fun isValidate(): Boolean{

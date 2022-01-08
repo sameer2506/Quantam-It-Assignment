@@ -4,13 +4,15 @@ import com.quantam.it.assignment.network.Results
 
 interface AuthDS {
 
-    suspend fun createUserWithEmailAndPassword(email: String, password: String): Results<Boolean>
+    suspend fun createUserWithEmailAndPassword(email: String, password: String): Results<String>
 
-    suspend fun saveUserDetails(data: HashMap<String, Any>): Results<Boolean>
+    suspend fun saveUserDetails(data: HashMap<String, Any>, id: String): Results<Boolean>
 
     suspend fun sendVerificationEmail(emailId: String): Results<Boolean>
 
     suspend fun signInUsingEmail(emailId: String, password: String): Results<Boolean>
 
-    suspend fun checkUserLogin() : Results<Boolean>
+    suspend fun forgotPassword(email: String): Results<Boolean>
+
+    suspend fun checkUserLogin(): Results<Boolean>
 }

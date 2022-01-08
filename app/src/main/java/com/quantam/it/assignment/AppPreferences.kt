@@ -16,4 +16,12 @@ class AppPreferences(ctx: Context) {
         return id.getString("id", "")
     }
 
+    fun saveName(name: String) {
+        id.edit().putString("name", name).apply()
+    }
+
+    fun getName(): String? {
+        return id.getString("name", "")
+    }
+
 }

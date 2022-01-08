@@ -36,7 +36,7 @@ class FlashDealRecyclerAdapter(
             list: FlashDealData
         ) {
             binding.imgProduct.setImageResource(list.image)
-            binding.textView22.text = "$${list.amount.toString()}"
+            binding.textView22.text = "$${list.amount}"
             binding.executePendingBindings()
         }
 

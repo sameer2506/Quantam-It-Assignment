@@ -25,24 +25,24 @@ class AuthRepository(
     override suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String
-    ): Results<Boolean> =
+    ): Results<String> =
         suspendCoroutine { cont ->
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    cont.resume(Results.Success(true))
+                    log(it.user!!.uid)
+                    cont.resume(Results.Success(it.user!!.uid))
                 }
                 .addOnFailureListener {
                     cont.resume(Results.Error(it))
                 }
         }
 
-    override suspend fun saveUserDetails(
-        data: HashMap<String, Any>
-    ): Results<Boolean> =
+    override suspend fun saveUserDetails(data: HashMap<String, Any>, id: String): Results<Boolean> =
         suspendCoroutine { cont ->
             firebaseFirestore
                 .collection("user")
-                .add(data)
+                .document(id)
+                .set(data)
                 .addOnSuccessListener {
                     cont.resume(Results.Success(true))
                 }
@@ -77,6 +77,17 @@ class AuthRepository(
                 }
         }
 
+    override suspend fun forgotPassword(email: String): Results<Boolean> =
+        suspendCoroutine { cont ->
+            auth
+                .sendPasswordResetEmail(email)
+                .addOnFailureListener {
+                    cont.resume(Results.Error(it))
+                }
+                .addOnSuccessListener {
+                    cont.resume(Results.Success(true))
+                }
+        }
 
     override suspend fun checkUserLogin(): Results<Boolean> =
         suspendCoroutine { cont ->

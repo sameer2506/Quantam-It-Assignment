@@ -14,12 +14,14 @@ import com.quantam.it.assignment.databinding.FragmentHomeBinding
 import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.ProductCatalog
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import android.os.CountDownTimer
+import com.quantam.it.assignment.AppPreferences
 import com.quantam.it.assignment.modal.DealsData
 import com.quantam.it.assignment.modal.FlashDealData
 import com.quantam.it.assignment.ui.home.adapters.*
+import com.quantam.it.assignment.utils.log
 
 class HomeFragment : Fragment() {
 

@@ -44,6 +44,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
@@ -230,11 +231,11 @@
 
             <EditText
                 android:id="@+id/et_phone_number"
-                android:layout_width="0dp"
                 style="@style/edit_text"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/_1234567890"
                 android:autofillHints="@string/_1234567890"
+                android:hint="@string/_1234567890"
                 android:inputType="phone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView4"
@@ -273,8 +274,8 @@
 
             <EditText
                 android:id="@+id/et_password"
-                android:layout_width="0dp"
                 style="@style/edit_text"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/password_hint"
                 android:hint="@string/password_hint"
@@ -327,10 +328,10 @@
 
             <TextView
                 android:id="@+id/tv_terms_and_condition"
+                style="@style/red_color_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                style="@style/red_color_text"
                 android:text="@string/terms_condition"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_forgot_password"
