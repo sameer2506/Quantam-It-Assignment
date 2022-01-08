@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantam.it.assignment.R
@@ -17,6 +15,12 @@ import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.ui.home.adapters.CategoryRecyclerAdapter
 import com.quantam.it.assignment.ui.home.adapters.ProductCatalogueRecyclerAdapter
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import android.os.CountDownTimer
+import com.quantam.it.assignment.modal.FlashDealData
+import com.quantam.it.assignment.ui.home.adapters.FlashDealRecyclerAdapter
 
 class HomeFragment : Fragment() {
 
@@ -33,6 +37,7 @@ class HomeFragment : Fragment() {
     private val categoryList = ArrayList<CategoriesData>()
     private val backToCityList = ArrayList<ProductCatalog>()
     private val clothAndShoesList = ArrayList<ProductCatalog>()
+    private val flashDealList = ArrayList<FlashDealData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,9 +64,63 @@ class HomeFragment : Fragment() {
         setUpBackToListRecyclerView()
         createClothShoesList()
         setUpClothShoesRecyclerView()
+        createFlashDealList()
+        setUpFlashRecyclerView()
+
+        object : CountDownTimer(5000000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                // Used for formatting digit to be in 2 digits only
+                val f: NumberFormat = DecimalFormat("00")
+                val hour = millisUntilFinished / 3600000 % 24
+                val min = millisUntilFinished / 60000 % 60
+                val sec = millisUntilFinished / 1000 % 60
+                binding.countDown.text =
+                    f.format(hour).toString() + ":" + f.format(min) + ":" + f.format(sec)
+            }
+
+            // When the task is over it will print 00:00:00 there
+            override fun onFinish() {
+                binding.countDown.text = "00:00:00"
+            }
+        }.start()
+
     }
 
-    private fun setUpClothShoesRecyclerView(){
+    private fun createFlashDealList() {
+
+        var data = FlashDealData(R.drawable.syndal, 220.00)
+        flashDealList.add(data)
+
+        data = FlashDealData(R.drawable.syndal, 220.00)
+        flashDealList.add(data)
+
+        data = FlashDealData(R.drawable.syndal, 220.00)
+        flashDealList.add(data)
+
+    }
+
+    private fun setUpFlashRecyclerView() {
+
+        binding.flashDealsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+
+            val flashAdapter = FlashDealRecyclerAdapter(flashDealList, fragmentContext)
+
+            val horizontalLayout = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            layoutManager = horizontalLayout
+
+            adapter = flashAdapter
+        }
+
+    }
+
+
+    private fun setUpClothShoesRecyclerView() {
 
         binding.clothAndShoesRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
@@ -80,7 +139,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUpCategoryRecyclerView(){
+    private fun setUpCategoryRecyclerView() {
 
         binding.recyclerViewCategory.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
@@ -100,7 +159,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setUpBackToListRecyclerView(){
+    private fun setUpBackToListRecyclerView() {
 
         binding.backRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
@@ -119,7 +178,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun createClothShoesList(){
+    private fun createClothShoesList() {
 
         var data = ProductCatalog(R.drawable.levis_cloth, 30)
         clothAndShoesList.add(data)
@@ -151,7 +210,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun createBackToCityList(){
+    private fun createBackToCityList() {
         var data = ProductCatalog(R.drawable.watch, 30)
         backToCityList.add(data)
 
