@@ -14,7 +14,5 @@ interface AuthDS {
 
     suspend fun forgotPassword(email: String): Results<Boolean>
 
-    suspend fun checkUserLogin(): Results<Boolean>
-
     suspend fun getUserDetails(): Results<Boolean>
 }

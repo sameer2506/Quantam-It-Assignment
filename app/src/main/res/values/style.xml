@@ -115,4 +115,8 @@
         <item name="android:background">@drawable/product_catalogue_drawable</item>
     </style>
 
+    <style name="progress_bar_style">
+        <item name="colorAccent">#d50000</item> <!-- Whatever color you want-->
+    </style>
+
 </resources>

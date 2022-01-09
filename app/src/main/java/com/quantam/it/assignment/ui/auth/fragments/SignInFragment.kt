@@ -34,9 +34,7 @@ import com.quantam.it.assignment.security.isValidMail
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVM
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVMF
 import com.quantam.it.assignment.ui.home.HomeActivity
-import com.quantam.it.assignment.utils.log
-import com.quantam.it.assignment.utils.logError
-import com.quantam.it.assignment.utils.toast
+import com.quantam.it.assignment.utils.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -223,25 +221,6 @@ class SignInFragment : Fragment(), KodeinAware {
         }
     }
 
-    private fun checkUserLogin(){
-
-        viewModel.checkUserLogin()
-        viewModel.checkUserLogin.observe(viewLifecycleOwner, {
-            when(it){
-                is Results.Success -> {
-                   if (it.data){
-                       startActivity(Intent(fragmentContext, HomeActivity::class.java))
-                       fragmentActivity.finish()
-                   }
-                }
-                is Results.Loading -> {}
-                is Results.Error-> {
-                    log(it.exception.localizedMessage!!)
-                }
-            }
-        })
-    }
-
     private fun forgotPassword() {
 
         if (isEmpty(binding.etEmailId)) {
@@ -292,6 +271,8 @@ class SignInFragment : Fragment(), KodeinAware {
         if (!isValidate())
             return
 
+        startLoadingDialog(fragmentActivity)
+
         val emailId: String = binding.etEmailId.text.toString()
         val password: String = binding.etPassword.text.toString()
 
@@ -299,11 +280,14 @@ class SignInFragment : Fragment(), KodeinAware {
         viewModel.signInUsingEmail.observe(viewLifecycleOwner, {
             when (it) {
                 is Results.Loading -> {
+                    dismissKeyboard(fragmentActivity)
                 }
                 is Results.Success -> {
+                    loadingDialogDismiss()
                     getUserDetails()
                 }
                 is Results.Error -> {
+                    loadingDialogDismiss()
                     fragmentContext.toast("Something went wrong. Try again later.")
                     logError(it.exception.localizedMessage!!)
                 }

@@ -1,4 +1,4 @@
-package com.quantam.it.assignment.ui.home.fragments.slideshow
+package com.quantam.it.assignment.ui.home.fragments.logOut
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_log_out"
-        android:name="com.quantam.it.assignment.ui.home.fragments.slideshow.SlideshowFragment"
+        android:name="com.quantam.it.assignment.ui.home.fragments.logOut.SlideshowFragment"
         android:label="@string/menu_log_out"
         tools:layout="@layout/fragment_slideshow" />
 

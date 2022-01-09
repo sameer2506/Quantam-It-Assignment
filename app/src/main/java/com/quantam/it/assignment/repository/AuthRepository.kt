@@ -105,15 +105,5 @@ class AuthRepository(
                 }
         }
 
-    override suspend fun checkUserLogin(): Results<Boolean> =
-        suspendCoroutine { cont ->
-            if (auth.currentUser != null) {
-                cont.resume(Results.Success(true))
-            } else {
-                cont.resume(Results.Success(false))
-            }
-        }
-
-
 
 }

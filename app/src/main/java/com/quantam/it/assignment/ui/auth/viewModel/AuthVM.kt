@@ -48,15 +48,6 @@ class AuthVM(
         _getUserDetails.value = repository.getUserDetails()
     }
 
-    private val _checkUserLogin: MutableLiveData<Results<Boolean>> = MutableLiveData()
-    val checkUserLogin: LiveData<Results<Boolean>>
-        get() = _checkUserLogin
-
-    fun checkUserLogin() = viewModelScope.launch {
-        _checkUserLogin.value = Results.Loading
-        _checkUserLogin.value = repository.checkUserLogin()
-    }
-
     private val _forgotPassword: MutableLiveData<Results<Boolean>> = MutableLiveData()
     val forgotPassword: LiveData<Results<Boolean>>
         get() = _forgotPassword

@@ -19,8 +19,7 @@ import com.quantam.it.assignment.security.isValidMail
 import com.quantam.it.assignment.security.isValidMobile
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVM
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVMF
-import com.quantam.it.assignment.utils.logError
-import com.quantam.it.assignment.utils.toast
+import com.quantam.it.assignment.utils.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -69,6 +68,8 @@ class SignUpFragment : Fragment(), KodeinAware {
         if (!isValidate())
             return
 
+        startLoadingDialog(fragmentActivity)
+
         val name: String = binding.etName.text.toString()
         val emailId: String = binding.etEmailId.text.toString()
         val contactNo = binding.etPhoneNumber.text.toString()
@@ -77,11 +78,15 @@ class SignUpFragment : Fragment(), KodeinAware {
         viewModel.createUserWithEmailAndPassword(emailId, password)
         viewModel.createNewAccount.observe(viewLifecycleOwner, {
             when(it){
-                is Results.Loading -> {}
+                is Results.Loading -> {
+                    dismissKeyboard(fragmentActivity)
+                }
                 is Results.Success -> {
+                    loadingDialogDismiss()
                     saveData(name, emailId, contactNo, it.data)
                 }
                 is Results.Error -> {
+                    loadingDialogDismiss()
                     fragmentContext.toast("Something went wrong. Try again later.")
                     logError(it.exception.localizedMessage!!)
                 }
@@ -90,6 +95,7 @@ class SignUpFragment : Fragment(), KodeinAware {
     }
 
     private fun saveData(name: String, emailId: String, contactNo: String, id: String) {
+        startLoadingDialog(fragmentActivity)
 
         val timestamp = Timestamp.now()
         val milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
@@ -107,9 +113,11 @@ class SignUpFragment : Fragment(), KodeinAware {
             when(it){
                 is Results.Loading ->{}
                 is Results.Success -> {
+                    loadingDialogDismiss()
                     findNavController().navigate(R.id.action_sign_up_to_sign_in_fragment)
                 }
                 is Results.Error -> {
+                    loadingDialogDismiss()
                     fragmentContext.toast("Something went wrong. Try again later.")
                     logError(it.exception.localizedMessage!!)
                 }
