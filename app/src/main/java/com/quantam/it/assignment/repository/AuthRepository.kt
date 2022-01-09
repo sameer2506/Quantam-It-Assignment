@@ -70,7 +70,7 @@ class AuthRepository(
                 .signInWithEmailAndPassword(emailId, password)
                 .addOnSuccessListener {
                     appPreferences.saveId(auth.uid!!)
-                    appPreferences.setEmailLoginStatus(true)
+                    appPreferences.setIsUserLogIn(true)
                     cont.resume(Results.Success(true))
                 }
                 .addOnFailureListener {
@@ -103,6 +103,11 @@ class AuthRepository(
                 .addOnSuccessListener {
                     cont.resume(Results.Success(true))
                 }
+        }
+
+    override suspend fun userLogOut(): Results<Boolean> =
+        suspendCoroutine { cont ->
+            auth.signOut()
         }
 
 

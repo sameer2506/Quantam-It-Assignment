@@ -2,6 +2,7 @@ package com.quantam.it.assignment.ui.home.fragments.home
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,25 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.FragmentHomeBinding
 import com.quantam.it.assignment.modal.CategoriesData
-import com.quantam.it.assignment.modal.ProductCatalog
-
-import java.text.DecimalFormat
-import java.text.NumberFormat
-import android.os.CountDownTimer
-import com.quantam.it.assignment.AppPreferences
 import com.quantam.it.assignment.modal.DealsData
 import com.quantam.it.assignment.modal.FlashDealData
+import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.ui.home.adapters.*
-import com.quantam.it.assignment.utils.log
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentHomeBinding
 
     private lateinit var fragmentContext: Context
     private lateinit var fragmentActivity: FragmentActivity
@@ -47,10 +40,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         fragmentContext = requireContext()
         fragmentActivity = requireActivity()
@@ -93,7 +86,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setUpDealsRecyclerView(){
+    private fun setUpDealsRecyclerView() {
 
         binding.dealsOfTheDayRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
@@ -113,7 +106,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun createDealsList(){
+    private fun createDealsList() {
 
         var data = DealsData(R.drawable.girl, "BIG OFFER DAY", "Offer 35% Off")
         dealsList.add(data)
@@ -123,7 +116,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setUpBestSellerRecyclerView(){
+    private fun setUpBestSellerRecyclerView() {
         binding.bestSellerRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
 
@@ -141,7 +134,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun createBestSellerList(){
+    private fun createBestSellerList() {
 
         var data = ProductCatalog(R.drawable.mobiles, 20)
         bestSellersList.add(data)
@@ -289,8 +282,4 @@ class HomeFragment : Fragment() {
         backToCityList.add(data)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

@@ -57,4 +57,13 @@ class AuthVM(
         _forgotPassword.value = repository.forgotPassword(email)
     }
 
+    private val _userLogOut: MutableLiveData<Results<Boolean>> = MutableLiveData()
+    val userLogOut: LiveData<Results<Boolean>>
+    get() = _userLogOut
+
+    fun userLogOut() = viewModelScope.launch {
+        _userLogOut.value = Results.Loading
+        _userLogOut.value = repository.userLogOut()
+    }
+
 }

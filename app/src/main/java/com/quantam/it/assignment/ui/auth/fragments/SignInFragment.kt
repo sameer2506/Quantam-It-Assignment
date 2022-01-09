@@ -54,27 +54,17 @@ class SignInFragment : Fragment(), KodeinAware {
     private lateinit var appPreferences: AppPreferences
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    val regCode: Int = 123
+    private val regCode: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
 
     override fun onStart() {
         super.onStart()
 
-        if (appPreferences.getEmailLoginStatus() || appPreferences.getFbLoginStatus() || appPreferences.getGoogleLoginStatus()){
+        if (appPreferences.getIsUserLogIn()) {
             startActivity(Intent(fragmentContext, HomeActivity::class.java))
             fragmentActivity.finish()
         }
-
-        /*
-        checkUserLogin()
-
-        if (GoogleSignIn.getLastSignedInAccount(fragmentContext) != null) {
-            startActivity(Intent(fragmentContext, HomeActivity::class.java))
-            fragmentActivity.finish()
-        }
-
-         */
 
     }
 
@@ -128,61 +118,12 @@ class SignInFragment : Fragment(), KodeinAware {
         }
 
         binding.imgBtnFacebookLogin.setOnClickListener {
-            signInWithFacebook()
+
         }
     }
 
-    private fun signInWithFacebook() {
-        // Initialize Facebook Login button
-        if (!appPreferences.getFbLoginStatus()){
-            LoginManager.getInstance().logInWithReadPermissions(this, mutableListOf("email", "public_profile"))
-            LoginManager.getInstance().registerCallback(callbackManager, object :
-                FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    log("facebook:onSuccess:$loginResult")
-                    firebaseAuthWithFacebook(loginResult.accessToken)
-                }
-
-                override fun onCancel() {
-                    log("facebook:onCancel")
-                }
-
-                override fun onError(error: FacebookException) {
-                    logError("facebook:onError $error")
-                }
-            })
-        }else{
-            fragmentContext.toast("already log in")
-            startActivity(Intent(fragmentContext, HomeActivity::class.java))
-            fragmentActivity.finish()
-        }
-    }
-
-
-    private fun firebaseAuthWithFacebook(token: AccessToken) {
-        log("handleFacebookAccessToken:$token")
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    log("signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
-                    log("$user")
-                    appPreferences.setFbLoginStatus(true)
-                    startActivity(Intent(fragmentContext, HomeActivity::class.java))
-                    fragmentActivity.finish()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    logError("signInWithCredential:failure ${task.exception}")
-                    fragmentContext.toast("Authentication failed.")
-//                    updateUI(null)
-                }
-            }
-    }
 
     private fun signInGoogle() {
-
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, regCode)
     }
@@ -213,7 +154,7 @@ class SignInFragment : Fragment(), KodeinAware {
             if (task.isSuccessful) {
                 appPreferences.saveId(account.email.toString())
                 appPreferences.saveName(account.displayName.toString())
-                appPreferences.setGoogleLoginStatus(true)
+                appPreferences.setIsUserLogIn(true)
 
                 startActivity(Intent(fragmentContext, HomeActivity::class.java))
                 fragmentActivity.finish()
@@ -295,7 +236,7 @@ class SignInFragment : Fragment(), KodeinAware {
         })
     }
 
-    private fun getUserDetails(){
+    private fun getUserDetails() {
 
         viewModel.getUserDetails()
         viewModel.getUserDetails.observe(viewLifecycleOwner, {
