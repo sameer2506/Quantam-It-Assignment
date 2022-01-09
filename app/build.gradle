@@ -93,5 +93,6 @@ dependencies {
 
     implementation "androidx.preference:preference-ktx:1.1.1"
 
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    //facebook login dependency
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 }

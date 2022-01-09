@@ -53,7 +53,8 @@
     <string name="flash_deals">FLASH DEALS</string>
     <string name="discount_you_can_t_resist">Discount you can\'t resist!</string>
 
-    <string name="facebook_app_id">661040938412010</string>
-    <string name="fb_login_protocol_scheme">fb661040938412010</string>
+    <string name="facebook_app_id">1238774776618142</string>
+    <string name="fb_login_protocol_scheme">fb1238774776618142</string>
+
     <string name="hi">Hi,</string>
 </resources>

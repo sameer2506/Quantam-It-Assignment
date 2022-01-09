@@ -12,18 +12,22 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FacebookAuthProvider
 import com.quantam.it.assignment.AppPreferences
 import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.FragmentSignInBinding
@@ -58,6 +62,8 @@ class SignInFragment : Fragment(), KodeinAware {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onStart() {
         super.onStart()
 
@@ -80,7 +86,10 @@ class SignInFragment : Fragment(), KodeinAware {
 
         appPreferences = AppPreferences(fragmentContext)
 
-        FacebookSdk.sdkInitialize(fragmentContext);
+        //facebook
+        callbackManager = CallbackManager.Factory.create()
+
+        auth = FirebaseAuth.getInstance()
 
         return binding.root
     }
@@ -118,8 +127,53 @@ class SignInFragment : Fragment(), KodeinAware {
         }
 
         binding.imgBtnFacebookLogin.setOnClickListener {
-
+            signInWithFacebook()
         }
+    }
+
+    private fun signInWithFacebook() {
+        // Initialize Facebook Login button
+        if (!appPreferences.getIsUserLogIn()) {
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, mutableListOf("email", "public_profile"))
+            LoginManager.getInstance().registerCallback(callbackManager, object :
+                FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    fragmentContext.toast("facebook:onSuccess:$loginResult")
+                    firebaseAuthWithFacebook(loginResult.accessToken)
+                    appPreferences.setIsUserLogIn(true)
+                }
+
+                override fun onCancel() {
+                    fragmentContext.toast("facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    logError("facebook:onError $error")
+                }
+            })
+        } else {
+            fragmentContext.toast("already log in")
+        }
+    }
+
+    private fun firebaseAuthWithFacebook(token: AccessToken) {
+        log("handleFacebookAccessToken:$token")
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    log("signInWithCredential:success")
+                    val user = auth.currentUser
+                    log("$user")
+                } else {
+                    // If sign in fails, display a message to the user.
+                    logError("signInWithCredential:failure ${task.exception}")
+                    fragmentContext.toast("Authentication failed.")
+                    //updateUI(null)
+                }
+            }
     }
 
 
