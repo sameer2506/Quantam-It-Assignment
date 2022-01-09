@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,8 @@ import com.quantam.it.assignment.security.isValidMail
 import com.quantam.it.assignment.security.isValidMobile
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVM
 import com.quantam.it.assignment.ui.auth.viewModel.AuthVMF
+import com.quantam.it.assignment.ui.spinner.category.CountryCodeSpinnerAdapter
+import com.quantam.it.assignment.ui.spinner.category.ObjCountryCodes
 import com.quantam.it.assignment.utils.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -37,6 +40,8 @@ class SignUpFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var viewModel: AuthVM
 
+    private var countryCode: String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +59,8 @@ class SignUpFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpCustomSpinner()
+
        binding.tvSignIn.setOnClickListener {
            findNavController().navigate(R.id.action_sign_up_to_sign_in_fragment)
        }
@@ -61,6 +68,28 @@ class SignUpFragment : Fragment(), KodeinAware {
         binding.btnSignUp.setOnClickListener {
             signUp()
         }
+    }
+
+    private fun setUpCustomSpinner(){
+
+        val countryCodeSpinnerAdapter = CountryCodeSpinnerAdapter(fragmentContext, ObjCountryCodes.list!!)
+        binding.spinnerCountryCode.adapter = countryCodeSpinnerAdapter
+
+        binding.spinnerCountryCode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                countryCode = ObjCountryCodes.list!![position].code
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+
     }
 
     private fun signUp(){
@@ -106,7 +135,7 @@ class SignUpFragment : Fragment(), KodeinAware {
         data["email"] = emailId
         data["contactNo"] = contactNo
         data["createdOn"] = netDate
-        data["countryCode"] = "+91"
+        data["countryCode"] = countryCode
 
         viewModel.saveUserDetails(data, id)
         viewModel.saveUserDetails.observe(viewLifecycleOwner, {

@@ -11,7 +11,7 @@ import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.utils.toast
 
 class CategoryRecyclerAdapter(
-    val arrayList: ArrayList<CategoriesData>,
+    private val arrayList: ArrayList<CategoriesData>,
     val context: Context
 ) : RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryVH>() {
 

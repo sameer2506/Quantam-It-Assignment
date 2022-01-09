@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import com.quantam.it.assignment.R
 
-class CategorySpinnerAdapter(
+class CountryCodeSpinnerAdapter(
     context: Context,
-    infoList: List<Categories>
-) : ArrayAdapter<Categories>(context, 0, infoList) {
+    infoList: List<Codes>
+) : ArrayAdapter<Codes>(context, 0, infoList) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return initView(position,convertView,parent)
@@ -24,15 +23,13 @@ class CategorySpinnerAdapter(
 
     private fun initView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-        val categoryData = getItem(position)
+        val codeData = getItem(position)
 
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.category_recycler_view_item_view, parent, false)
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.spineer_item, parent, false)
 
-        val img = view.findViewById<ImageView>(R.id.category_img)
-        val text = view.findViewById<TextView>(R.id.textView12)
+        val text = view.findViewById<TextView>(R.id.textViewCountryCode)
 
-        img.setImageResource(categoryData!!.image)
-        text.text = categoryData.categoryName
+        text.text = codeData!!.code
 
         return view
     }

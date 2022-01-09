@@ -3,8 +3,6 @@ package com.quantam.it.assignment.ui.home
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
-import android.widget.Toolbar
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -13,7 +11,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.quantam.it.assignment.AppPreferences
 import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.ActivityHomeBinding
@@ -43,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_log_out
+                R.id.nav_home, R.id.nav_log_out
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

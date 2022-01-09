@@ -7,9 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.quantam.it.assignment.R
 import com.quantam.it.assignment.databinding.BestDealsRecyclerItemBinding
-import com.quantam.it.assignment.databinding.CategoryRecyclerViewItemViewBinding
-import com.quantam.it.assignment.databinding.ProductCatalogueRecyclerItemViewBinding
-import com.quantam.it.assignment.modal.CategoriesData
 import com.quantam.it.assignment.modal.ProductCatalog
 import com.quantam.it.assignment.utils.toast
 
