@@ -24,4 +24,12 @@ class AppPreferences(ctx: Context) {
         return id.getString("name", "")
     }
 
+    fun setFbLoginStatus(isLogin:Boolean) {
+        id.edit().putBoolean("LoginStatus", isLogin).apply()
+    }
+
+    fun getFbLoginStatus(): Boolean {
+        return id.getBoolean("LoginStatus",false)
+    }
+
 }

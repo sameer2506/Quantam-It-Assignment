@@ -53,4 +53,7 @@
     <string name="clothing_and_shoes">CLOTHING AND SHOES</string>
     <string name="flash_deals">FLASH DEALS</string>
     <string name="discount_you_can_t_resist">Discount you can\'t resist!</string>
+
+    <string name="facebook_app_id">661040938412010</string>
+    <string name="fb_login_protocol_scheme">fb661040938412010</string>
 </resources>

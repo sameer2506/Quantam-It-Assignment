@@ -92,4 +92,6 @@ dependencies {
     implementation "org.kodein.di:kodein-di-framework-android-x:6.2.1"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
+
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }
