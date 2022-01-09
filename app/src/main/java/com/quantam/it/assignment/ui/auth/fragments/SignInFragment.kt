@@ -63,12 +63,20 @@ class SignInFragment : Fragment(), KodeinAware {
     override fun onStart() {
         super.onStart()
 
+        if (appPreferences.getEmailLoginStatus() || appPreferences.getFbLoginStatus() || appPreferences.getGoogleLoginStatus()){
+            startActivity(Intent(fragmentContext, HomeActivity::class.java))
+            fragmentActivity.finish()
+        }
+
+        /*
         checkUserLogin()
 
         if (GoogleSignIn.getLastSignedInAccount(fragmentContext) != null) {
             startActivity(Intent(fragmentContext, HomeActivity::class.java))
             fragmentActivity.finish()
         }
+
+         */
 
     }
 
@@ -135,7 +143,6 @@ class SignInFragment : Fragment(), KodeinAware {
                 override fun onSuccess(loginResult: LoginResult) {
                     log("facebook:onSuccess:$loginResult")
                     firebaseAuthWithFacebook(loginResult.accessToken)
-                    appPreferences.setFbLoginStatus(true)
                 }
 
                 override fun onCancel() {
@@ -164,6 +171,7 @@ class SignInFragment : Fragment(), KodeinAware {
                     log("signInWithCredential:success")
                     val user = firebaseAuth.currentUser
                     log("$user")
+                    appPreferences.setFbLoginStatus(true)
                     startActivity(Intent(fragmentContext, HomeActivity::class.java))
                     fragmentActivity.finish()
                 } else {
@@ -207,6 +215,7 @@ class SignInFragment : Fragment(), KodeinAware {
             if (task.isSuccessful) {
                 appPreferences.saveId(account.email.toString())
                 appPreferences.saveName(account.displayName.toString())
+                appPreferences.setGoogleLoginStatus(true)
 
                 startActivity(Intent(fragmentContext, HomeActivity::class.java))
                 fragmentActivity.finish()

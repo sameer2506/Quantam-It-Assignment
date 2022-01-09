@@ -32,4 +32,20 @@ class AppPreferences(ctx: Context) {
         return id.getBoolean("LoginStatus",false)
     }
 
+    fun setEmailLoginStatus(isLogin: Boolean){
+        id.edit().putBoolean("email_login", isLogin).apply()
+    }
+
+    fun getEmailLoginStatus(): Boolean {
+        return id.getBoolean("email_login", false)
+    }
+
+    fun setGoogleLoginStatus(isLogin: Boolean){
+        id.edit().putBoolean("google_login", isLogin).apply()
+    }
+
+    fun getGoogleLoginStatus(): Boolean {
+        return id.getBoolean("google_login", false)
+    }
+
 }

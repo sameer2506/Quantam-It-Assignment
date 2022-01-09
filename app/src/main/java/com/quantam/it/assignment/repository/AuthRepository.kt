@@ -70,6 +70,7 @@ class AuthRepository(
                 .signInWithEmailAndPassword(emailId, password)
                 .addOnSuccessListener {
                     appPreferences.saveId(auth.uid!!)
+                    appPreferences.setEmailLoginStatus(true)
                     cont.resume(Results.Success(true))
                 }
                 .addOnFailureListener {

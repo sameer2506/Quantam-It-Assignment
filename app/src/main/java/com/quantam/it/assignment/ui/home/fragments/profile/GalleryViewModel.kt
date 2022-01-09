@@ -1,4 +1,4 @@
-package com.quantam.it.assignment.ui.home.fragments.gallery
+package com.quantam.it.assignment.ui.home.fragments.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
