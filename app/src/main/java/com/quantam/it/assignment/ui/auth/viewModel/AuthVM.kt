@@ -39,9 +39,18 @@ class AuthVM(
         _signInUsingEmail.value = repository.signInUsingEmail(emailId, password)
     }
 
+    private val _getUserDetails: MutableLiveData<Results<Boolean>> = MutableLiveData()
+    val getUserDetails: LiveData<Results<Boolean>>
+        get() = _getUserDetails
+
+    fun getUserDetails() = viewModelScope.launch {
+        _getUserDetails.value = Results.Loading
+        _getUserDetails.value = repository.getUserDetails()
+    }
+
     private val _checkUserLogin: MutableLiveData<Results<Boolean>> = MutableLiveData()
     val checkUserLogin: LiveData<Results<Boolean>>
-    get() = _checkUserLogin
+        get() = _checkUserLogin
 
     fun checkUserLogin() = viewModelScope.launch {
         _checkUserLogin.value = Results.Loading
@@ -50,7 +59,7 @@ class AuthVM(
 
     private val _forgotPassword: MutableLiveData<Results<Boolean>> = MutableLiveData()
     val forgotPassword: LiveData<Results<Boolean>>
-    get() = _forgotPassword
+        get() = _forgotPassword
 
     fun forgotPassword(email: String) = viewModelScope.launch {
         _forgotPassword.value = Results.Loading

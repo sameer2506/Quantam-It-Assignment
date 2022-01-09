@@ -77,6 +77,21 @@ class AuthRepository(
                 }
         }
 
+    override suspend fun getUserDetails(): Results<Boolean> =
+        suspendCoroutine { cont ->
+            firebaseFirestore
+                .collection("user")
+                .document(appPreferences.getId()!!)
+                .get()
+                .addOnSuccessListener {
+                    appPreferences.saveName(it["name"].toString())
+                    cont.resume(Results.Success(true))
+                }
+                .addOnFailureListener {
+                    cont.resume(Results.Error(it))
+                }
+        }
+
     override suspend fun forgotPassword(email: String): Results<Boolean> =
         suspendCoroutine { cont ->
             auth

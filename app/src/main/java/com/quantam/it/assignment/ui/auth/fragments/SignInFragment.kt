@@ -70,7 +70,6 @@ class SignInFragment : Fragment(), KodeinAware {
             fragmentActivity.finish()
         }
 
-
     }
 
     override fun onCreateView(
@@ -194,7 +193,7 @@ class SignInFragment : Fragment(), KodeinAware {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                UpdateUI(account)
+                updateUI(account)
             }
         } catch (e: ApiException) {
             fragmentContext.toast("Try again later...")
@@ -202,7 +201,7 @@ class SignInFragment : Fragment(), KodeinAware {
         }
     }
 
-    private fun UpdateUI(account: GoogleSignInAccount) {
+    private fun updateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -293,6 +292,24 @@ class SignInFragment : Fragment(), KodeinAware {
                 is Results.Loading -> {
                 }
                 is Results.Success -> {
+                    getUserDetails()
+                }
+                is Results.Error -> {
+                    fragmentContext.toast("Something went wrong. Try again later.")
+                    logError(it.exception.localizedMessage!!)
+                }
+            }
+        })
+    }
+
+    private fun getUserDetails(){
+
+        viewModel.getUserDetails()
+        viewModel.getUserDetails.observe(viewLifecycleOwner, {
+            when (it) {
+                is Results.Loading -> {
+                }
+                is Results.Success -> {
                     startActivity(Intent(fragmentContext, HomeActivity::class.java))
                     fragmentActivity.finish()
                 }
@@ -302,6 +319,7 @@ class SignInFragment : Fragment(), KodeinAware {
                 }
             }
         })
+
     }
 
     private fun isValidate(): Boolean {

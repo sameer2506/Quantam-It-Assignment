@@ -16,7 +16,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
+            android:background="#f02e00"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@color/white"
             app:popupTheme="@style/Theme.QuantamItAssignment.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
